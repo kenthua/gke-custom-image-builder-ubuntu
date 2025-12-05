@@ -20,7 +20,21 @@ This template sets up an automated pipeline using:
 *   Google Cloud SDK (`gcloud`) installed and authenticated on your local machine.
 *   Terraform installed on your local machine.
 
-## How to Use This Project
+## Hosting Packer in Artifact Registry (Recommended)
+
+For enhanced security and version control, it is recommended to host the Packer builder image in your own Artifact Registry. By default, Cloud Build might use public builder images.
+
+This template assumes you have a Packer container image available in your Artifact Registry. You can follow the guide in the [TODO update once available: Ubuntu User Guide - Hosting Packer in Artifact Registry] to build and push a Packer image. The `cloudbuild.yaml` should be updated to reference this image.
+
+**Example `cloudbuild.yaml` step using Packer from AR:**
+```yaml
+steps:
+  - name: 'us-central1-docker.pkg.dev/YOUR_PROJECT_ID/packer/packer:latest' # Example path
+    args: ['build', 'scripts/ubuntu/customize_ubuntu.pkr.hcl']
+    # ... other options
+```
+
+## How to Build Custom Image 
 
 1.  **Configure Your Environment**
 
@@ -36,10 +50,13 @@ This template sets up an automated pipeline using:
 
 2.  **Customize the Build**
 
-    *   **Packer Template:** Modify `scripts/ubuntu/customize_ubuntu.pkr.hcl`. The `provisioner "shell"` blocks are where you can add or change commands to customize the image.
-    *   **Customization Scripts:** Add or edit shell scripts in the `scripts/ubuntu/` directory. The example includes scripts for installing packages and setting kernel parameters.
+    *   **`scripts/ubuntu/customize_ubuntu.pkr.hcl`:** This is the main Packer template. Modify the `provisioner` blocks to add your desired customizations.
+    *   **`scripts/ubuntu/`:** Add any shell scripts referenced by your Packer template in this directory.
+    *   **Base Image:** Update the `source_image` in `main.tf` to the GKE Ubuntu base image you want to build upon. See [TODO update once available How to Choose a Base Image] in the main user guide.
+    *   **`cloudbuild.yaml`:** Verify the Packer image path matches your Artifact Registry location.
 
-3.  **Deploy the Pipeline and Run the Build**
+
+3.  **Deploy the Pipeline**
 
     *   Initialize Terraform. This will download the necessary providers and set up the local module.
         ```bash
@@ -49,10 +66,12 @@ This template sets up an automated pipeline using:
         ```bash
         terraform apply
         ```
-    *   To initiate a build, navigate to the Cloud Build > Triggers page in the Google Cloud Console. Find the trigger named `gke-ubuntu-custom-image-build` (or your custom `trigger_name`) and click the "Run" button to manually trigger the build.
+4.  **Run the Build**
+
+    *   To initiate a build, navigate to the **Cloud Build > Triggers** page in the Google Cloud Console. Find the trigger named `gke-ubuntu-custom-image-build` (or your custom `trigger_name`) and click the "Run" button to manually trigger the build.
     *   You can monitor the build progress in the Cloud Build History page.
 
-4.  **Verify the Image**
+5.  **Verify the Image**
 
     *   After the `terraform apply` command completes, your new image will be available in your GCP project. You can find it in the Google Cloud Console under **Compute Engine > Images**.
     *   The image will be named according to your `target_image_name` variable, with a unique build ID appended to it (e.g., `my-gke-custom-ubuntu-xxxxxxxx`).
