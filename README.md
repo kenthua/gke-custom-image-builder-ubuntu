@@ -24,15 +24,8 @@ This template sets up an automated pipeline using:
 
 For enhanced security and version control, it is recommended to host the Packer builder image in your own Artifact Registry. By default, Cloud Build might use public builder images.
 
-This template assumes you have a Packer container image available in your Artifact Registry. You can follow the guide in the [TODO update once available: Ubuntu User Guide - Hosting Packer in Artifact Registry] to build and push a Packer image. The `cloudbuild.yaml` should be updated to reference this image.
+This template assumes you have a Packer container image available in your Artifact Registry. You can follow the guide in the [TODO update once public doc is available: Ubuntu User Guide - Hosting Packer in Artifact Registry](https://docs.google.com/document/d/165xzOqjCVSLHHFJZOXemZjsJoU1PMc-Ujv8aPTtpltY/edit?resourcekey=0-BADWvXQ9YRfcdy3iOO2DFQ&tab=t.bvq0dx6zumv0#heading=h.4byb5np86xig) to build and push a Packer image. 
 
-**Example `cloudbuild.yaml` step using Packer from AR:**
-```yaml
-steps:
-  - name: 'us-central1-docker.pkg.dev/YOUR_PROJECT_ID/packer/packer:latest' # Example path
-    args: ['build', 'scripts/ubuntu/customize_ubuntu.pkr.hcl']
-    # ... other options
-```
 
 ## How to Build Custom Image 
 
