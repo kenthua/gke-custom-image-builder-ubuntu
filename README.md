@@ -36,8 +36,9 @@ This template assumes you have a Packer container image available in your Artifa
 
     ```terraform
     project_id          = "your-gcp-project-id"
-    source_image        = "ubuntu-gke-2404-1-33-amd64-v20250812" # Example, change if needed
+    source_image        = "projects/ubuntu-os-gke-cloud/global/images/ubuntu-gke-2404-1-33-amd64-v20250812" # Example, change please 
     target_image_name   = "my-gke-custom-ubuntu"
+    target_image_family = "my-gke-custom-ubuntu-family" 
     ```
     *   See `variables.tf` for other optional variables you can override.
 
@@ -59,10 +60,12 @@ This template assumes you have a Packer container image available in your Artifa
         ```bash
         terraform apply
         ```
+
 4.  **Run the Build**
 
     *   To initiate a build, navigate to the **Cloud Build > Triggers** page in the Google Cloud Console. Find the trigger named `gke-ubuntu-custom-image-build` (or your custom `trigger_name`) and click the "Run" button to manually trigger the build.
     *   You can monitor the build progress in the Cloud Build History page.
+
 
 5.  **Verify the Image**
 
