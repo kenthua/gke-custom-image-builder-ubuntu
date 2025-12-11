@@ -18,13 +18,18 @@
 # It provisions a GCS bucket for scripts, a service account for Cloud Build,
 # and the necessary IAM permissions.
 
+# Create a random suffix to ensure the bucket name is unique
+resource "random_id" "bucket_suffix" {
+  byte_length = 4
+}
+
 # Create a GCS bucket to store build scripts and artifacts
 resource "google_storage_bucket" "imagebuild_scripts" {
-  project      = var.project_id
-  name         = "${var.project_id}-imagebuild-scripts"
-  location     = "US"
+  project                     = var.project_id
+  name                        = "${var.project_id}-imagebuild-scripts-${random_id.bucket_suffix.hex}"
+  location                    = "US"
   uniform_bucket_level_access = true
-  force_destroy = false
+  force_destroy               = false
 }
 
 # Create a dedicated service account for the image building process
