@@ -24,10 +24,10 @@ This template sets up an automated pipeline using:
 
 For enhanced security and version control, it is recommended to host the Packer builder image in your own Artifact Registry. By default, Cloud Build might use public builder images.
 
-This template assumes you have a Packer container image available in your Artifact Registry. You can follow the guide in the [TODO update once public doc is available: Ubuntu User Guide - Hosting Packer in Artifact Registry](https://docs.google.com/document/d/165xzOqjCVSLHHFJZOXemZjsJoU1PMc-Ujv8aPTtpltY/edit?resourcekey=0-BADWvXQ9YRfcdy3iOO2DFQ&tab=t.bvq0dx6zumv0#heading=h.4byb5np86xig) to build and push a Packer image. 
+This template assumes you have a Packer container image available in your Artifact Registry. You can follow the guide in the [TODO update once public doc is available: Ubuntu User Guide - Hosting Packer in Artifact Registry](https://docs.google.com/document/d/165xzOqjCVSLHHFJZOXemZjsJoU1PMc-Ujv8aPTtpltY/edit?resourcekey=0-BADWvXQ9YRfcdy3iOO2DFQ&tab=t.bvq0dx6zumv0#heading=h.4byb5np86xig) to build and push a Packer image.
 
 
-## How to Build Custom Image 
+## How to Build Custom Image
 
 1.  **Configure Your Environment**
 
@@ -36,10 +36,14 @@ This template assumes you have a Packer container image available in your Artifa
 
     ```terraform
     project_id          = "your-gcp-project-id"
-    source_image        = "projects/ubuntu-os-gke-cloud/global/images/ubuntu-gke-2404-1-33-amd64-v20250812" # Example, change please 
+    # Example, please change
+    source_image        = "projects/ubuntu-os-gke-cloud/global/images/ubuntu-gke-2404-1-33-amd64-v20250812"
+
+    # Note: The target_image_name must include the substring "ubuntu".
     target_image_name   = "my-gke-custom-ubuntu"
-    target_image_family = "my-gke-custom-ubuntu-family" 
+    target_image_family = "my-gke-custom-ubuntu-family"
     ```
+
     *   See `variables.tf` for other optional variables you can override.
 
 2.  **Customize the Build**
