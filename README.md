@@ -71,7 +71,7 @@ This template assumes you have a Packer container image available in your Artifa
 
 5.  **Verify the Image**
 
-    *   After the Triggers `Runc` command completes, your new image will be available in your GCP project. You can find it in the Google Cloud Console under **Compute Engine > Images**.
+    *   After the Triggers `Run` command completes, your new image will be available in your GCP project. You can find it in the Google Cloud Console under **Compute Engine > Images**.
     *   The image will be named according to your `target_image_name` variable, with a unique build ID appended to it (e.g., `my-gke-custom-ubuntu-xxxxxxxx`).
 
 ## Disclaimer
