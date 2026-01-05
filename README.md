@@ -15,6 +15,7 @@ This template sets up an automated pipeline using:
 
 ## Prerequisites
 
+*   Obtain the “GKE Custom Image Builder Toolkit” user guide from your Google Cloud Technical Account Manager.
 *   An active Google Cloud project with billing enabled.
 *   The following APIs enabled: Compute Engine, Cloud Build, IAM, and Cloud Storage.
 *   Google Cloud SDK (`gcloud`) installed and authenticated on your local machine.
@@ -24,7 +25,7 @@ This template sets up an automated pipeline using:
 
 For enhanced security and version control, it is recommended to host the Packer builder image in your own Artifact Registry. By default, Cloud Build might use public builder images.
 
-This template assumes you have a Packer container image available in your Artifact Registry. You can follow the guide in the [TODO update once public doc is available: Ubuntu User Guide - Hosting Packer in Artifact Registry](https://docs.google.com/document/d/165xzOqjCVSLHHFJZOXemZjsJoU1PMc-Ujv8aPTtpltY/edit?resourcekey=0-BADWvXQ9YRfcdy3iOO2DFQ&tab=t.bvq0dx6zumv0#heading=h.4byb5np86xig) to build and push a Packer image.
+This template assumes you have a Packer container image available in your Artifact Registry. You can obtain the Host Packer in AR user guide from Google Cloud Technical Account Manager to build and push a Packer image.
 
 
 ## How to Build Custom Image
@@ -50,9 +51,6 @@ This template assumes you have a Packer container image available in your Artifa
 
     *   **`scripts/ubuntu/customize_ubuntu.pkr.hcl`:** This is the main Packer template. Modify the `provisioner` blocks to add your desired customizations.
     *   **`scripts/ubuntu/`:** Add any shell scripts referenced by your Packer template in this directory.
-    *   **Base Image:** Update the `source_image` in `main.tf` to the GKE Ubuntu base image you want to build upon. See [TODO update once available How to Choose a Base Image] in the main user guide.
-    *   **`cloudbuild.yaml`:** Verify the Packer image path matches your Artifact Registry location.
-
 
 3.  **Deploy the Pipeline**
 
@@ -73,7 +71,7 @@ This template assumes you have a Packer container image available in your Artifa
 
 5.  **Verify the Image**
 
-    *   After the `terraform apply` command completes, your new image will be available in your GCP project. You can find it in the Google Cloud Console under **Compute Engine > Images**.
+    *   After the Triggers `Runc` command completes, your new image will be available in your GCP project. You can find it in the Google Cloud Console under **Compute Engine > Images**.
     *   The image will be named according to your `target_image_name` variable, with a unique build ID appended to it (e.g., `my-gke-custom-ubuntu-xxxxxxxx`).
 
 ## Disclaimer
