@@ -100,11 +100,12 @@ This repository includes an example script to install the NVIDIA CUDA toolkit. T
 
     ```hcl
     provisioner "shell" {
-      script = "gs://<YOUR_GCS_BUCKET_NAME>/ubuntu_scripts/install_cuda_toolkit.sh"
+      script = "install_cuda_toolkit.sh"    
+      execute_command = "sudo /bin/bash {{.Path}}"
     }
     ```
 
-    You can add this after the existing `install_packages.sh` provisioner block. Remember to replace `<YOUR_GCS_BUCKET_NAME>` with the actual name of your GCS bucket.
+    You can add this after the existing provisioner block.
 
 4.  **Deploy the Pipeline and Run the Build:**
     *   After making the above modifications, run `terraform apply` again. This step ensures your updated `main.tf` provisions the new GCS object and your `customize_ubuntu.pkr.hcl` is uploaded with the correct reference.
