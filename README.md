@@ -108,6 +108,11 @@ This repository includes an example script to install the NVIDIA CUDA toolkit. T
     You can add this after the existing provisioner block.
 
 4.  **Deploy the Pipeline and Run the Build:**
+    *   **Commit your changes.** After copying the script, updating `main.tf`, and modifying `customize_ubuntu.pkr.hcl`, commit these changes to your repository.
+        ```bash
+        git add .
+        git commit -m "feat: Add NVIDIA CUDA Toolkit example"
+        ```
     *   After making the above modifications, run `terraform apply` again. This step ensures your updated `main.tf` provisions the new GCS object and your `customize_ubuntu.pkr.hcl` is uploaded with the correct reference.
         ```bash
         terraform apply
